@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  admin:
+    build: ./admin
+    ports:
+      - 3000:3000
+
+  api:
+    build: ./api
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - 8000:80
+
+  db:
+    image: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: example
+      MYSQL_DATABASE: storage
+
+volumes:
+  db_data: {}
